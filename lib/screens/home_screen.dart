@@ -3,12 +3,14 @@ import '../components/app_bar_component.dart';
 import '../components/category_component.dart';
 import '../components/product_card.dart';
 import '../components/bottom_nav_bar_component.dart';
-
+import 'product_details.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<String> product_name = ["Green Nike Air Shoes", "Black Nike Air Shoes", "Red Nike Air Shoes", "Blue Nike Air Shoes", "Yellow Nike Air Shoes", "White Nike Air Shoes", "Orange Nike Air Shoes", "Purple Nike Air Shoes", "Pink Nike Air Shoes", "Brown Nike Air Shoes"];
+
     return Scaffold(
       appBar: const AppBarComponent(),
       body: SingleChildScrollView(
@@ -32,17 +34,18 @@ class HomeScreen extends StatelessWidget {
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 10,
+              itemCount: product_name.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.75,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
+          
               itemBuilder: (context, index) {
-                return const ProductCard(
-                  image: 'assets/images/image.png',
-                  name: 'Green Nike Air Shoes',
+                return ProductCard(
+                  image: 'assets/images/nikeshoe.png',
+                  name: product_name[index],
                   price: 250.0,
                   rating: 2.9,
                 );

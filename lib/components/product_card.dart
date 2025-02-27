@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../screens/product_details.dart';
 class ProductCard extends StatefulWidget {
   final String image;
   final String name;
@@ -35,32 +35,62 @@ class _ProductCardState extends State<ProductCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Image.asset(widget.image, fit: BoxFit.cover),
-          ),
+            Expanded(
+            child: GestureDetector(
+              onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => ProductDetails(
+                  image: widget.image,
+                  name: widget.name,
+                  price: widget.price,
+                  rating: widget.rating,
+                ),
+
+          
+                ),
+              );
+              },
+              child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(widget.image, fit: BoxFit.cover, width: double.infinity),
+              ),
+            ),
+            ),
           const SizedBox(height: 10),
           Text(widget.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 4),
           Row(
             children: [
               const Icon(Icons.star, color: Colors.amber, size: 16),
+              const SizedBox(width: 4),
               Text("${widget.rating}", style: const TextStyle(fontSize: 14)),
             ],
           ),
-          Text("\$${widget.price}", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange)),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  isAdded = !isAdded;
-                });
-              },
-              icon: Icon(isAdded ? Icons.check : Icons.add, color: Colors.white),
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.black,
-                shape: const CircleBorder(),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Ensures price is on left and button on right
+            children: [
+              Text(
+                "\$${widget.price}",
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange),
               ),
-            ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    isAdded = !isAdded;
+                  });
+                },
+                icon: Icon(isAdded ? Icons.check : Icons.add, color: Colors.white),
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: const CircleBorder(),
+
+                ),
+                ),
+              
+            ],
           ),
         ],
       ),
