@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final String image;
   final String name;
   final double price;
@@ -13,6 +13,13 @@ class ProductCard extends StatelessWidget {
     required this.price,
     required this.rating,
   });
+
+  @override
+  _ProductCardState createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  bool isAdded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +36,26 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Image.asset(image, fit: BoxFit.cover),
+            child: Image.asset(widget.image, fit: BoxFit.cover),
           ),
           const SizedBox(height: 10),
-          Text(name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          Text(widget.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           Row(
             children: [
               const Icon(Icons.star, color: Colors.amber, size: 16),
-              Text("$rating", style: const TextStyle(fontSize: 14)),
+              Text("${widget.rating}", style: const TextStyle(fontSize: 14)),
             ],
           ),
-          Text("\$$price", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange)),
+          Text("\$${widget.price}", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange)),
           Align(
             alignment: Alignment.bottomRight,
             child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.add, color: Colors.white),
+              onPressed: () {
+                setState(() {
+                  isAdded = !isAdded;
+                });
+              },
+              icon: Icon(isAdded ? Icons.check : Icons.add, color: Colors.white),
               style: IconButton.styleFrom(
                 backgroundColor: Colors.black,
                 shape: const CircleBorder(),
